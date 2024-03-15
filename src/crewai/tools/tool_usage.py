@@ -32,6 +32,7 @@ class ToolUsage:
         tools_description: Description of the tools available for the agent.
         tools_names: Names of the tools available for the agent.
         function_calling_llm: Language model to be used for the tool usage.
+        telemetry: Enable telemetry.
     """
 
     def __init__(
@@ -43,10 +44,11 @@ class ToolUsage:
         task: Any,
         function_calling_llm: Any,
         action: Any,
+        telemetry: bool,
     ) -> None:
         self._i18n: I18N = I18N()
         self._printer: Printer = Printer()
-        self._telemetry: Telemetry = Telemetry()
+        self._telemetry: Telemetry = Telemetry(telemetry)
         self._run_attempts: int = 1
         self._max_parsing_attempts: int = 3
         self._remember_format_after_usages: int = 3

@@ -115,6 +115,9 @@ class Agent(BaseModel):
     callbacks: Optional[List[InstanceOf[BaseCallbackHandler]]] = Field(
         default=None, description="Callback to be executed"
     )
+    telemetry: bool = Field(
+        default=True, description="Enable telemetry."
+    )
 
     def __init__(__pydantic_self__, **data):
         config = data.pop("config", {})
@@ -251,6 +254,7 @@ class Agent(BaseModel):
             "tools_handler": self.tools_handler,
             "function_calling_llm": self.function_calling_llm,
             "callbacks": self.callbacks,
+            "telemetry": self.telemetry,
         }
 
         if self._rpm_controller:

@@ -30,6 +30,7 @@ class CrewAgentExecutor(AgentExecutor):
     have_forced_answer: bool = False
     force_answer_max_iterations: Optional[int] = None
     step_callback: Optional[Any] = None
+    telemetry: bool = True
 
     @root_validator()
     def set_force_answer_max_iterations(cls, values: Dict) -> Dict:
@@ -187,6 +188,7 @@ class CrewAgentExecutor(AgentExecutor):
                 function_calling_llm=self.function_calling_llm,
                 task=self.task,
                 action=agent_action,
+                telemetry=self.telemetry,
             )
             tool_calling = tool_usage.parse(agent_action.log)
 

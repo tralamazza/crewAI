@@ -37,8 +37,10 @@ class Telemetry:
     attribute in the Crew class.
     """
 
-    def __init__(self):
+    def __init__(self, enabled=True):
         self.ready = False
+        if not enabled:
+            return
         try:
             telemetry_endpoint = "http://telemetry.crewai.com:4318"
             self.resource = Resource(

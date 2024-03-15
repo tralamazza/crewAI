@@ -43,6 +43,7 @@ class Crew(BaseModel):
         full_output: Whether the crew should return the full output with all tasks outputs or just the final output.
         step_callback: Callback to be executed after each step for every agents execution.
         share_crew: Whether you want to share the complete crew infromation and execution with crewAI to make the library better, and allow us to train models.
+        telemetry: Enable/Disable telemetry.
     """
 
     __hash__ = object.__hash__  # type: ignore
@@ -76,6 +77,7 @@ class Crew(BaseModel):
     config: Optional[Union[Json, Dict[str, Any]]] = Field(default=None)
     id: UUID4 = Field(default_factory=uuid.uuid4, frozen=True)
     share_crew: Optional[bool] = Field(default=False)
+    telemetry: bool = Field(default=True)
     step_callback: Optional[Any] = Field(
         default=None,
         description="Callback to be executed after each step for all agents execution.",
@@ -119,7 +121,7 @@ class Crew(BaseModel):
         self._cache_handler = CacheHandler()
         self._logger = Logger(self.verbose)
         self._rpm_controller = RPMController(max_rpm=self.max_rpm, logger=self._logger)
-        self._telemetry = Telemetry()
+        self._telemetry = Telemetry(self.telemetry)
         self._telemetry.set_tracer()
         self._telemetry.crew_creation(self)
         return self
@@ -150,6 +152,7 @@ class Crew(BaseModel):
 
         if self.agents:
             for agent in self.agents:
+                agent.telemetry = self.telemetry
                 agent.set_cache_handler(self._cache_handler)
                 if self.max_rpm:
                     agent.set_rpm_controller(self._rpm_controller)
