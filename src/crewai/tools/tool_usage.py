@@ -44,7 +44,7 @@ class ToolUsage:
         task: Any,
         function_calling_llm: Any,
         action: Any,
-        telemetry: bool,
+        telemetry: bool = True,
     ) -> None:
         self._i18n: I18N = I18N()
         self._printer: Printer = Printer()

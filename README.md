@@ -281,7 +281,7 @@ Data collected includes:
   - Understand out of the publically available tools, which ones are being used the most so we can improve them
 
 Users can opt-in sharing the complete telemetry data by setting the `share_crew` attribute to `True` on their Crews.
-Users can disabled telemetry completely by setting `telemetry` to `False` on their crews.
+Users can disable telemetry completely by setting the `telemetry` attribute to `False` on their Crews.
 
 ## License
 
